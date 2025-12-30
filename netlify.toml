@@ -1,3 +1,6 @@
+[build]
+  publish = "public"
+
 # These redirects use the Netlify Image CDN to transform images.
 #
 # For each redirect, if a particular transformation option is not provided
