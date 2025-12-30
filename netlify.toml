@@ -29,8 +29,8 @@
 # At the time of this writing, the blog has a fixed width of 640 pixels, hence
 # the width of 640.
 [[redirects]]
-  from = "/blog/posts/:year/:month/:slug/default/:filename"
-  to = "/.netlify/images?url=/blog/posts/:year/:month/:slug/:filename&w=640&fit=contain"
+  from = "/blog/posts/:year/:month/:slug/variants/default/:filename"
+  to = "/.netlify/images?url=/blog/posts/:year/:month/:slug/original/:filename&w=640&fit=contain"
   status = 302
 
 # Format: Blog lossless
@@ -38,8 +38,8 @@
 # At the time of this writing, the blog has a fixed width of 640 pixels, hence
 # the width of 640.
 [[redirects]]
-  from = "/blog/posts/:year/:month/:slug/lossless/:filename"
-  to = "/.netlify/images?url=/blog/posts/:year/:month/:slug/:filename&w=640&fit=contain&q=100"
+  from = "/blog/posts/:year/:month/:slug/variants/lossless/:filename"
+  to = "/.netlify/images?url=/blog/posts/:year/:month/:slug/original/:filename&w=640&fit=contain&q=100"
   status = 302
 
 # There is no "one size fits all" format or size for favicons, but the image
@@ -53,7 +53,7 @@
 # https://realfavicongenerator.net/
 [[redirects]]
   from = "/blog/meta/favicon"
-  to = "/.netlify/images?url=/blog/meta/cropped.jpg&w=512&h=512&fit=cover&position=center&fm=png"
+  to = "/.netlify/images?url=/blog/meta/original/cropped.jpg&w=512&h=512&fit=cover&position=center&fm=png"
   status = 302
 
 # Similarly, there is no "one size fits all" format or size for social images,
@@ -70,5 +70,5 @@
 # https://blog.hootsuite.com/social-media-image-sizes-guide/
 [[redirects]]
   from = "/blog/meta/social"
-  to = "/.netlify/images?url=/blog/meta/cropped.jpg&w=1920&h=1080&fit=cover&position=top&fm=jpg"
+  to = "/.netlify/images?url=/blog/meta/original/cropped.jpg&w=1920&h=1080&fit=cover&position=top&fm=jpg"
   status = 302
