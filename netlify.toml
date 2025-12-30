@@ -1,0 +1,64 @@
+# These redirects use the Netlify Image CDN to transform images.
+#
+# For each redirect, if a particular transformation option is not provided
+# (e.g., format or quality), it's because the default is good enough and I'm not
+# worried about the default being changed to something unreasonable in the
+# future. For example, I don't specify quality because the default is currently
+# 75, which I think makes sense, and I'm sure Netlify is never going to change
+# the default to something ridiculous in the future, like 10.
+#
+# See the following page for the current default values:
+# https://docs.netlify.com/build/image-cdn/overview/#position
+#
+# It's worth noting that the format of the generated image may depend on how the
+# image was loaded. For example, if the image was loaded because the URL of the
+# image was the "src" of an "img" tag, the generated image may be in the WebP
+# format. On the other hand, if the URL is navigated to directly (e.g., because
+# the "Open Image in New Tab" context menu item was clicked), the generated
+# image may be in in the format of the original image. That's because browsers
+# send different "Accept" headers depending on how a URL is fetched. For
+# example, in the former case, the "Accept" header may include "image/webp"
+# whereas in the latter case, it may not, because the browser can't know in
+# advance that it will be fetching an image.
+
+# Format: Blog default
+#
+# At the time of this writing, the blog has a fixed width of 640 pixels, hence
+# the width of 640.
+[[redirects]]
+  from = "/blog/posts/:year/:month/:slug/default/:filename"
+  to = "/.netlify/images?url=/blog/posts/:year/:month/:slug/:filename&w=640&fit=contain"
+  status = 302
+
+# Format: Blog lossless
+#
+# At the time of this writing, the blog has a fixed width of 640 pixels, hence
+# the width of 640.
+[[redirects]]
+  from = "/blog/posts/:year/:month/:slug/lossless/:filename"
+  to = "/.netlify/images?url=/blog/posts/:year/:month/:slug/:filename&w=640&fit=contain&q=100"
+  status = 302
+
+# There is no "one size fits all" format or size for favicons, but the image
+# created by this redirect should be _good enough_ for production use. It's also
+# a good source image that one could upload to a favicon generator like
+# RealFaviconGenerator if they wanted to create and publish several different
+# favicons for different platforms.
+#
+# https://stackoverflow.com/a/48969053/715866
+# https://favicon.im/blog/complete-favicon-size-format-guide-2025
+# https://realfavicongenerator.net/
+[[redirects]]
+  from = "/blog/meta/favicon"
+  to = "/.netlify/images?url=/blog/meta/cropped.jpg&w=1024&h=1024&fit=cover&position=center&fm=png&q=100"
+  status = 302
+
+# Similarly, there is no "one size fits all" format or size for social images,
+# but the image created by this redirect should be _good enough_ for production
+# use, and it's likewise a good source image for a social image generator.
+#
+# https://blog.hootsuite.com/social-media-image-sizes-guide/
+[[redirects]]
+  from = "/blog/meta/social"
+  to = "/.netlify/images?url=/blog/meta/cropped.jpg&w=1920&h=1080&fit=cover&position=center&fm=png&q=100"
+  status = 302
