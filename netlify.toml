@@ -53,7 +53,7 @@
 # https://realfavicongenerator.net/
 [[redirects]]
   from = "/blog/meta/favicon"
-  to = "/.netlify/images?url=/blog/meta/cropped.jpg&w=1024&h=1024&fit=cover&position=center&fm=png"
+  to = "/.netlify/images?url=/blog/meta/cropped.jpg&w=512&h=512&fit=cover&position=center&fm=png"
   status = 302
 
 # Similarly, there is no "one size fits all" format or size for social images,
