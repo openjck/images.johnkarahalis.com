@@ -63,5 +63,5 @@
 # https://blog.hootsuite.com/social-media-image-sizes-guide/
 [[redirects]]
   from = "/blog/meta/social"
-  to = "/.netlify/images?url=/blog/meta/cropped.jpg&w=1920&h=1080&fit=cover&position=center&fm=png&q=100"
+  to = "/.netlify/images?url=/blog/meta/cropped.jpg&w=1920&h=1080&fit=cover&position=top&fm=png&q=100"
   status = 302
