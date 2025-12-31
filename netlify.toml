@@ -88,7 +88,11 @@
 # image without changing its filename. By changing its filename when the image
 # changes (perhaps image.v2.jpg) and also updating the blog to use that new
 # filename, I can ensure that the new image is used, rather than a cached
-# version.
+# version. Technically, if I'm very, very consistent about that, and I never
+# forget to add a version number to the image, then I could use the "immutable"
+# directive, because the URL would always change when the image content changes.
+# But in reality, I might forget to add version numbers when files change, so
+# leaving "immutable" off is safest.
 [[headers]]
   for = "/.netlify/images"
   [headers.values]
