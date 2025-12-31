@@ -73,12 +73,12 @@
   to = "/.netlify/images?url=/blog/meta/original/cropped.jpg&w=1920&h=1080&fit=cover&position=top&fm=jpg"
   status = 302
 
-# Cache URLs which redirect (e.g., /blog/posts/.../variants/default/image.jpg)
-# for one day.
+# Cache URLs which redirect (anything other than /.netlify/images...) for one
+# day.
 [[headers]]
-  for = "/*/variants/*"
+  for = "/*"
   [headers.values]
-    cache-control = "public, max-age=86400"
+    Cache-Control = "public, max-age=86400"
 
 # Cache images themselves (e.g., /.netlify/images?url=...image.jpg?w=100) for
 # one year, but _do not_ use "immutable", so the client _may_ revalidate the
@@ -96,5 +96,5 @@
 [[headers]]
   for = "/.netlify/images"
   [headers.values]
-    cache-control = "public, max-age=31536000"
-    vary = "Accept"
+    Cache-Control = "public, max-age=31536000"
+    Vary = "Accept"
