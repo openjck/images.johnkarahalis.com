@@ -52,7 +52,7 @@
 # https://favicon.im/blog/complete-favicon-size-format-guide-2025
 # https://realfavicongenerator.net/
 [[redirects]]
-  from = "/blog/meta/favicon"
+  from = "/blog/meta/variants/favicon"
   to = "/.netlify/images?url=/blog/meta/original/cropped.jpg&w=512&h=512&fit=cover&position=center&fm=png"
   status = 302
 
@@ -69,6 +69,90 @@
 #
 # https://blog.hootsuite.com/social-media-image-sizes-guide/
 [[redirects]]
-  from = "/blog/meta/social"
+  from = "/blog/meta/variants/social"
   to = "/.netlify/images?url=/blog/meta/original/cropped.jpg&w=1920&h=1080&fit=cover&position=top&fm=jpg"
   status = 302
+
+# Cache stable URLs (URLs which redirect to /.netlify/images...) for one day.
+#
+# This way, I can change the settings for a variant (e.g., changing "default"
+# from w=640 to w=900), and the changes will apply for all users within 24
+# hours.
+#
+# I do _not_ need to create a "v2" version of each image when I change the
+# settings of a variant, because CDNs and browsers typically treat paths with
+# different query parameters as different cache entries, and the query
+# parameters of the target would be changing (again, from w=640 to w=900 in my
+# example).
+#
+# I wish there were a way to make these paths more generic, so that I don't need
+# to have one entry for blog posts, one entry for meta images, and so on.
+# However, I don't know of a way to achieve that without changing the URL
+# structure. Wildcards appear to only work at the end of a path, so a value like
+# "*/variants/*" would not work as expected.
+[[headers]]
+  for = "/blog/posts/:year/:month/:slug/variants/:variant/:filename"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+[[headers]]
+  for = "/blog/meta/variants/:type"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+# Cache images themselves (the content returned from /.netlify/images...) for
+# one year.
+#
+# One might be tempted to apply these headers to the /.netlify/images path, but
+# that does not work. Rather /.netlify/images can be thought of as a function
+# that loads the image specified by the "url" query parameter and also re-uses
+# the Cache-Control headers of the image specified by the "url" query parameter.
+# That's why these headers are applied to the _source_ images, not
+# /.netlify/images.
+#
+# Because "immutable" is specified, changing the name of the file is necessary
+# to bust the cache. That is, if I change an image and I want to see that change
+# take effect on whatever web pages are using the image, I should rename the
+# file (e.g., example.v1.jpg -> example.v2.jpg) and update the web page to use
+# that new filename.
+#
+# As mentioned above, I do _not_ need to create a "v2" version of each image
+# when I change the settings of a _variant_, because CDNs and browsers typically
+# treat paths with different query parameters as different cache entries, and
+# the query parameters of the target would be changing (again, from w=640 to
+# w=900 in my example).
+#
+# That means I could probably bust the cache of all images at once, if needed,
+# by having the redirects append a version query parameter (e.g., "v=v1") which
+# changes whenever I want to bust the cache. However, others say this shouldn't
+# be relied upon. I'm using the Netlify CDN, which will definitely treat paths
+# differently if they have different "w" or "h" query parameters, for example,
+# but it might not treat paths with different "v" query parameters differently.
+#
+# The "Vary: Accept" header tells clients (CDNs and browsers) to create separate
+# cache entries based on the "Accept" header provided in the request. This is
+# important because Netlify reads the "Accept" header of the request to
+# determine what kind of image it should return. For example, if the "Accept"
+# header of the request contains "image/webp", Netlify might return a WebP
+# image, whereas if the header doesn't include "image/webp", it might return
+# a JPG image. We don't want WebP images and JPG images to be treated as the
+# same for caching purposes, which is why we need this "Vary: Accept" header. If
+# this were not set, the first user to load an image might get a JPG because
+# that's all their browser supports, and all subsequent visitors would also get
+# JPGs because the "Accept" header of the request would not be considered when
+# the CDN is creating and using caches.
+#
+# I wish there were a way to make these paths more generic, so that I don't need
+# to have one entry for blog posts, one entry for meta images, and so on.
+# However, I don't know of a way to achieve that without changing the URL
+# structure. Wildcards appear to only work at the end of a path, so a value like
+# "*/variants/*" would not work as expected.
+[[headers]]
+  for = "/blog/posts/:year/:month/:slug/original/:filename"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Vary = "Accept"
+[[headers]]
+  for = "/blog/meta/original/:filename"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Vary = "Accept"
