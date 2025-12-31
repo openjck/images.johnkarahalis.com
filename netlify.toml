@@ -78,7 +78,7 @@
 [[headers]]
   for = "/*/variants/*"
   [headers.values]
-    Cache-Control = "public, max-age=86400"
+    cache-control = "public, max-age=86400"
 
 # Cache images themselves (e.g., /.netlify/images?url=...image.jpg?w=100) for
 # one year, but _do not_ use "immutable", so the client _may_ revalidate the
@@ -96,5 +96,5 @@
 [[headers]]
   for = "/.netlify/images"
   [headers.values]
-    Cache-Control = "public, max-age=31536000"
-    Vary = "Accept"
+    cache-control = "public, max-age=31536000"
+    vary = "Accept"
