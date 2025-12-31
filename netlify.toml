@@ -72,3 +72,25 @@
   from = "/blog/meta/social"
   to = "/.netlify/images?url=/blog/meta/original/cropped.jpg&w=1920&h=1080&fit=cover&position=top&fm=jpg"
   status = 302
+
+# Cache URLs which redirect (e.g., /blog/posts/.../variants/default/image.jpg)
+# for one day.
+[[headers]]
+  for = "/*/variants/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+# Cache images themselves (e.g., /.netlify/images?url=...image.jpg?w=100) for
+# one year, but _do not_ use "immutable", so the client _may_ revalidate the
+# freshness of the image based on its own heuristics if it chooses.
+#
+# Even still, because this expiration is so long (1 year), I shouldn't update an
+# image without changing its filename. By changing its filename when the image
+# changes (perhaps image.v2.jpg) and also updating the blog to use that new
+# filename, I can ensure that the new image is used, rather than a cached
+# version.
+[[headers]]
+  for = "/.netlify/images"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+    Vary = "Accept"
