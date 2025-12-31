@@ -94,7 +94,7 @@
 # But in reality, I might forget to add version numbers when files change, so
 # leaving "immutable" off is safest.
 [[headers]]
-  for = "/.netlify/images"
+  for = "/.netlify/images*"
   [headers.values]
     Cache-Control = "public, max-age=31536000"
     Vary = "Accept"
