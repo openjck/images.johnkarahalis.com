@@ -73,11 +73,14 @@
   to = "/.netlify/images?url=/blog/meta/original/cropped.jpg&w=1920&h=1080&fit=cover&position=top&fm=jpg"
   status = 302
 
-# Cache stable URLs (URLs which redirect to /.netlify/images...) for one day.
+# Cache stable URLs (URLs which redirect to /.netlify/images...) for one month.
 #
 # This way, I can change the settings for a variant (e.g., changing "default"
-# from w=640 to w=900), and the changes will apply for all users within 24
-# hours.
+# from w=640 to w=900), and the changes will apply for all users within one
+# month. That may sound like a long time, but it's not as if any changes would
+# be dramatic. I may just choose to make images larger or smaller, for example.
+# That's fine, especially because images that are too large will be scaled down
+# to fit within the width of the blog post.
 #
 # I do _not_ need to create a "v2" version of each image when I change the
 # settings of a variant, because CDNs and browsers typically treat paths with
@@ -93,11 +96,11 @@
 [[headers]]
   for = "/blog/posts/:year/:month/:slug/variants/:variant/:filename"
   [headers.values]
-    Cache-Control = "public, max-age=86400"
+    Cache-Control = "public, max-age=2592000"
 [[headers]]
   for = "/blog/meta/variants/:type"
   [headers.values]
-    Cache-Control = "public, max-age=86400"
+    Cache-Control = "public, max-age=2592000"
 
 # Cache images themselves (the content returned from /.netlify/images...) for
 # one year.
