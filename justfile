@@ -1,5 +1,3 @@
-.PHONY: remove-metadata
-
 # This removes all metadata from all files in "public", except for color profile
 # metadata, which is needed to prevent the image from appearing differently than
 # intended. exiftool still prints warnings about the color profile metadata
@@ -8,6 +6,6 @@
 #
 # https://photo.stackexchange.com/a/69742
 remove-metadata:
-	find public -type f -exec \
-		exiftool -q -q -overwrite_original -all= -TagsFromFile @ -ColorSpaceTags \
-		{} +
+  find public -type f -exec \
+    exiftool -q -q -overwrite_original -all= -TagsFromFile @ -ColorSpaceTags \
+    {} +
