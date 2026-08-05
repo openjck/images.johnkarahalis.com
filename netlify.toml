@@ -6,9 +6,7 @@
 # For each redirect, if a particular transformation option is not provided
 # (e.g., format or quality), it's because the default is good enough and I'm not
 # worried about the default being changed to something unreasonable in the
-# future. For example, I don't specify quality because the default is currently
-# 75, which I think makes sense, and I'm sure Netlify is never going to change
-# the default to something ridiculous in the future, like 10.
+# future.
 #
 # See the following page for the current default values:
 # https://docs.netlify.com/build/image-cdn/overview/#position
@@ -30,7 +28,7 @@
 # the width of 640.
 [[redirects]]
   from = "/blog/posts/:year/:month/:slug/variants/default/:filename"
-  to = "/.netlify/images?url=/blog/posts/:year/:month/:slug/original/:filename&w=640&fit=contain"
+  to = "/.netlify/images?url=/blog/posts/:year/:month/:slug/original/:filename&w=640&fit=contain&q=90"
   status = 302
 
 # Format: Blog lossless
